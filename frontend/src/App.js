@@ -1,9 +1,10 @@
 import React from 'react';
+import LogIn from 'components/LogIn.js';
 
 export const App = () => {
   return (
-    <div>
-      Find me in src/app.js!
-    </div>
+    <div className="outer-div">
+    <LogIn />    
+</div>
   );
 }
