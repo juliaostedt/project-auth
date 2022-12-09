@@ -9,7 +9,7 @@ const LogIn = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [mode, setMode] = useState("register");
-    const [error, setError] = useState('');
+    const [loginError, setLoginError] = useState(null);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -40,6 +40,7 @@ const LogIn = () => {
                         dispatch(user.actions.setUserId(data.response.id))
                         dispatch(user.actions.setAccessToken(data.response.accessToken));
                         dispatch(user.actions.setError(null));
+                        setLoginError(null);
                     });
                 } else {
                     batch (() => {
@@ -47,19 +48,20 @@ const LogIn = () => {
                         dispatch(user.actions.setUserId(null))
                         dispatch(user.actions.setAccessToken(null));
                         dispatch(user.actions.setError(data.response));
+                        setLoginError(data.response);
                     });
-                     setError('Something went wrong, try again.');
                 }
             })
     }
     return (
         <>
+        <div className="log-in-div">
+            <h1>Welcome</h1>
         <label htmlFor="register">Register</label>
         <input type="radio" id="register" checked={mode === "register"} onChange={()=>setMode("register")}/>
         <label htmlFor="login">Login</label>
         <input type="radio" id="login" checked={mode === "login"} onChange={()=>setMode("login")}/>
         
-        <div className="log-in-div">
         <form onSubmit={onFormSubmit}>
             <label htmlFor="username">Username</label>
             <input 
@@ -73,6 +75,9 @@ const LogIn = () => {
                 id="password" 
                 value={password} 
                 onChange={e => setPassword(e.target.value)}/>
+            {loginError !== null && (
+            <p>{loginError}</p>
+            )}
             <button type="submit">Submit</button>
         </form>
         </div>

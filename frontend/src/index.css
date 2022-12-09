@@ -1,6 +1,11 @@
 @font-face {
   font-family: candyCane;
-  src: url("assets/fonts/Candcu__.ttf");
+  src: url("assets/fonts/KaushanScript-Regular.ttf");
+}
+
+@font-face {
+  font-family: Patrick;
+  src: url("assets/fonts/PatrickHand-Regular.ttf");
 }
 body {
   margin: 0;
@@ -9,12 +14,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: seagreen;
+  background-color: #5F7161;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: candyCane;
 }
 
 h1{
@@ -26,6 +30,7 @@ font-size: 35px;}
   align-items: center;
   justify-content: center;
   height: 50vh;
+  font-family: Patrick;
 }
 .log-in-div{
   display: flex;
@@ -46,9 +51,11 @@ form{
 }
 
 button{
-  background: seagreen;
+  background: #6D8B74;
   border-radius: 30px;
   margin: 20px;
+  font-family: CandyCane;
+  font-size: 20px;
 }
 
 button:hover{

@@ -31,10 +31,9 @@ const Content = () => {
 
     return (
         <>
-        <h2>This is the main component</h2>
         <div className="log-in-div">
         <h1>You are now logged in</h1>
-        <label>This is secret content</label>
+        <label>This is a secret message</label>
         <Link to="/login"> <button type="button" onClick={() => dispatch(user.actions.setAccessToken(null))}>Sign Out</button></Link>
         </div>
         </>

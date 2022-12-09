@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 
 dotenv.config()
 
-const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/project-authentication";
+const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/project-Authentication";
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = Promise;
 
@@ -133,7 +133,7 @@ res.status(400).json({
 
 };
 // AUTHENTICATED ENDPOINT
-const ThoughtSchema = new mongoose.Schema({
+/* const ThoughtSchema = new mongoose.Schema({
   message: {
     type: String,
   },
@@ -145,15 +145,15 @@ const ThoughtSchema = new mongoose.Schema({
     type: Number,
     default: 0
   }
-}); 
+});  */
 
 
-const Thought = mongoose.model("Thought", ThoughtSchema);
+/* const Thought = mongoose.model("Thought", ThoughtSchema);
 
 app.get("/thoughts", authenticateUser);
 app.get("/thoughts", (req, res)=> {
   res.status(200).json({success: true, response: "all the thoughts"});
-});
+}); */
 
  ///
 
