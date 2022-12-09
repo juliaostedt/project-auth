@@ -36,14 +36,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  firstname: {
-    type: String,
-    required: true
-  },
-  email: {
-    type: String,
-    required: true,
-  },
   accessToken: {
     type: String,
     default: () => crypto.randomBytes(128).toString("hex") //uses 128 bytes to create a randomized algorithm to crypto the password.
@@ -68,15 +60,13 @@ if(password.length < 8) {
     response: "password must be atleast 8 characters"
   });
 } else {
-  const newUser = await new User ({username: username, password: bcrypt.hashSync(password, salt), email: email, firstname: firstname}).save();
+  const newUser = await new User ({username: username, password: bcrypt.hashSync(password, salt)}).save();
   res.status(201).json({ //201 is for "created"
     success: true,
     response: {
       username: newUser.username,
       accessToken: newUser.accessToken,
-      id: newUser._id,
-      firstname: newUser.firstname,
-      email: newUser.email,
+      id: newUser._id
     }
   });
 }

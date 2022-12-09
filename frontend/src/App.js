@@ -1,23 +1,31 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import LogIn from 'components/LogIn.js';
-import Register from 'components/Register.js';
-import Content from 'components/Content.js';
+import Content from 'components/Content';
+import LogIn from 'components/LogIn';
+import NotFound from 'components/NotFound';
+import { Provider } from 'react-redux';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import user from 'reducers/user';
 
 
+const reducer = combineReducers({
+  user: user.reducer,
+});
+
+const store = configureStore({reducer});
 export const App = () => {
   return (
-    <BrowserRouter>
-    <main>
-    <div className="outer-div">
-      <Routes>
-        <Route path="/" element={<LogIn />} />
-        <Route path="/register" element={<Register />}/>
-        <Route path="/content" element={<Content />}/>
-
-  </Routes>
-    </div>
-    </main>
-  </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+      <div className="outer-div">
+        <Routes>
+          <Route path='/login' element={<LogIn/>}></Route>
+          <Route path='/' element={<Content/>}></Route>
+          <Route path='*' element={<NotFound/>}></Route>
+        </Routes>
+      </div>
+      </BrowserRouter>
+    </Provider>
+      
   );
 }
