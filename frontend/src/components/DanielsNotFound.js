@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 const NotFound = () => {
     return (
     <>
-        <h1>Not Found...</h1>
-        <Link to="/login"> <button>GO TO LOGIN</button></Link>
+        <h1>Page not found...</h1>
+        <Link to="/login"> <button>Log in here</button></Link>
     </>
     ) 
 }
