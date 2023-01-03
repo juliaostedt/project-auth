@@ -11,23 +11,6 @@ const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/project-Authentic
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = Promise;
 
-// Defines the port the app will run on. Defaults to 8080, but can be overridden
-// when starting the server. Example command to overwrite PORT env variable value:
-// PORT=9000 npm start
-const port = process.env.PORT || 8080;
-const app = express();
-
-// Add middlewares to enable cors and json body parsing
-app.use(cors());
-app.use(express.json());
-//// Tuesday
-
-// Start defining your routes here
-app.get("/", (req, res) => {
-  res.send("Welcome, please log in below");
-});
-
-//npm install crypto
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -46,20 +29,63 @@ const UserSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", UserSchema); // the first letter will be lowercase and an s will be added in the db to the name "User"
 
+const authenticateUser = async (req, res, next) => {
+const accessToken = req.header("Authorization");
+try {
+const user = await User.findOne({accessToken: accessToken});
+if (user) {
+  next();
+} else {
+  res.status(401).json({ //401 = Authentication error
+    success: false,
+    response: "Please log in"
+  })
+}
+} catch (error) { //400 - BAD REGUEST
+res.status(400).json({
+  success: false,
+  response: error
+})
+}
+
+};
+// Defines the port the app will run on. Defaults to 8080, but can be overridden
+// when starting the server. Example command to overwrite PORT env variable value:
+// PORT=9000 npm start
+const port = process.env.PORT || 8080;
+const app = express();
+
+// Add middlewares to enable cors and json body parsing
+app.use(cors());
+app.use(express.json());
+
+// Start defining your routes here
+app.get("/", (req, res) => {
+  res.send("This is the backend of Project Auth by Mia Dahlgren and Julia Östedt");
+});
+
+app.get("/users", async (req, res) => {
+  try {
+    const users = await User.find().limit(20).exec();
+    res.status(200).json(users)
+  } catch (error) {
+    res.status(400).json({ message: "Could not create user" })
+  }
+});
+
+app.get('/secrets', authenticateUser, (req, res) => {
+  res.status(200).json({message:"This is a super secret message"})
+});
+
 //REGISTER ENDPOINT
 app.post("/register", async (req, res) => {
-  const { username, password, firstname, email } = req.body;
-//npm install bcrypt
-// const code = [1,2,4,4];
-// const makeCodeSecret = (codeArr) => { const secretMessage = codeArr.map(singleNumber => singleNumber + 1)
-// return secretMessage }
-// transformedCode = makeCodeSecret(code); 
+const { username, password } = req.body;
 try {
-const salt = bcrypt.genSaltSync();
-if(password.length < 8) {
+  const salt = bcrypt.genSaltSync();
+  if(password.length < 8) {
   res.status(400),json({
     success: false,
-    response: "password must be atleast 8 characters"
+    response: "Password must be at least 8 characters"
   });
 } else {
   const newUser = await new User ({username: username, password: bcrypt.hashSync(password, salt)}).save();
@@ -86,7 +112,6 @@ catch(error) {
 // LOGIN ENDPOINT
 app.post("/login", async (req, res) => {
   const {username, password} = req.body;
-
   try {
     const user = await User.findOne({username});
     if (user && bcrypt.compareSync(password, user.password)) { //If our secret password is the same as the input if it would have been crupted in the same way it is true
@@ -98,13 +123,13 @@ app.post("/login", async (req, res) => {
         accessToken: user.accessToken
      }})
   } else {
-      res.status(400).json({
+      res.status(404).json({
         success: false,
         response: "Your password or username was incorrect"
       });
   }
 } catch (error) {
-    res.status(500).json({ //500 = internal server error
+    res.status(400).json({
       success: false,
       response: error
     });
@@ -112,26 +137,6 @@ app.post("/login", async (req, res) => {
 });
 
 //FUNCTION FOR AUTHENTICATED USER, IS ACCESS GRANTED?
-const authenticateUser = async (req, res, next) => {
-const accessToken = req.header("Authorization");
-try {
-const user = await User.findOne({accessToken: accessToken});
-if (user) {
-  next();
-} else {
-  res.status(401).json({ //401 = Authentication error
-    success: false,
-    response: "Please log in"
-  })
-}
-} catch (error) { //400 - BAD REGUEST
-res.status(400).json({
-  success: false,
-  response: error
-})
-}
-
-};
 // AUTHENTICATED ENDPOINT
 /* const ThoughtSchema = new mongoose.Schema({
   message: {
