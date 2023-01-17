@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 
 dotenv.config()
 
-const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/project-Authentication";
+const mongoUrl = process.env.MONGO_URL || "mongodb+srv://mdhmdh:NcrDhQ14QIBVLwcd@cluster0.yw2pt9y.mongodb.net/Project-Authentication?retryWrites=true&w=majority";
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = Promise;
 

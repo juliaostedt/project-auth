@@ -10,10 +10,8 @@ const LogIn = () => {
     const [password, setPassword] = useState("");
     const [mode, setMode] = useState("register");
     const [loginError, setLoginError] = useState(null);
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const accessToken = useSelector((store) => store.user.accessToken);
   
     useEffect( () => {
@@ -75,9 +73,9 @@ const LogIn = () => {
                 id="password" 
                 value={password} 
                 onChange={e => setPassword(e.target.value)}/>
-            {loginError !== null && (
+{/*             {loginError !== null && (
             <p>{loginError}</p>
-            )}
+            )} */}
             <button type="submit">Submit</button>
         </form>
         </div>
