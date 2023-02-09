@@ -1,78 +1,10 @@
-@font-face {
-  font-family: candyCane;
-  src: url("assets/fonts/KaushanScript-Regular.ttf");
-}
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow&family=Julius+Sans+One&family=Source+Sans+Pro&display=swap');
 
-@font-face {
-  font-family: Patrick;
-  src: url("assets/fonts/PatrickHand-Regular.ttf");
-}
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #5F7161;
+  font-family: 'Archivo Narrow', sans-serif;
+  font-size: 1.2em;
 }
-
-code {
-  font-family: candyCane;
-}
-
-h1{
-font-family: candyCane;
-font-size: 35px;}
-
-.outer-div{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 50vh;
-  font-family: Patrick;
-}
-.log-in-div{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 300px;
-  background-color: rgb(239, 209, 209);
-  border-radius: 30px;
-  padding: 5vh;
-  margin-top: 30vh;
-
-}
-
-form{
-  display: flex;
-  flex-direction: column;
-}
-
-button{
-  background: #6D8B74;
-  border-radius: 30px;
-  margin: 20px;
-  font-family: CandyCane;
-  font-size: 20px;
-}
-
-button:hover{
-  background: rgb(133, 184, 154);
-  border-radius: 30px;
-  margin: 20px;
-  text-shadow: 10px;
-  color: white;
-}
-
-a{
-  color: saddlebrown;
-  text-decoration: none;
-}
-
-a:hover{
-  color: rgb(69, 33, 7);
-
-}
-

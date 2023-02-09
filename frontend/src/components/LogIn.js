@@ -1,9 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector, batch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "utils/utils";
 
 import user from "reducers/user";
+import { StyledButton, StyledSection, StyledForm, OuterWrapper, StyledHeading } from "../GlobalStyles"
+
 
 const LogIn = () => {
     const [username, setUsername] = useState("");
@@ -13,27 +15,27 @@ const LogIn = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const accessToken = useSelector((store) => store.user.accessToken);
-  
-    useEffect( () => {
+
+    useEffect(() => {
         if (accessToken) {
             navigate("/");
         }
     }, [accessToken])
 
-    const onFormSubmit =(event) => {
+    const onFormSubmit = (event) => {
         event.preventDefault();
         const options = {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({username: username, password: password })
+            body: JSON.stringify({ username: username, password: password })
         }
         fetch(API_URL(mode), options)
             .then(response => response.json())
             .then(data => {
-                if(data.success) {
-                    batch(()=> {
+                if (data.success) {
+                    batch(() => {
                         dispatch(user.actions.setUsername(data.response.username));
                         dispatch(user.actions.setUserId(data.response.id))
                         dispatch(user.actions.setAccessToken(data.response.accessToken));
@@ -41,7 +43,7 @@ const LogIn = () => {
                         setLoginError(null);
                     });
                 } else {
-                    batch (() => {
+                    batch(() => {
                         dispatch(user.actions.setUsername(null));
                         dispatch(user.actions.setUserId(null))
                         dispatch(user.actions.setAccessToken(null));
@@ -52,34 +54,32 @@ const LogIn = () => {
             })
     }
     return (
-        <>
-        <div className="log-in-div">
-            <h1>Welcome</h1>
-        <label htmlFor="register">Register</label>
-        <input type="radio" id="register" checked={mode === "register"} onChange={()=>setMode("register")}/>
-        <label htmlFor="login">Login</label>
-        <input type="radio" id="login" checked={mode === "login"} onChange={()=>setMode("login")}/>
-        
-        <form onSubmit={onFormSubmit}>
-            <label htmlFor="username">Username</label>
-            <input 
-                type="text" 
-                id="username" 
-                value={username} 
-                onChange={e => setUsername(e.target.value)}/>
-            <label htmlFor="password">Password</label>
-            <input 
-                type="password" 
-                id="password" 
-                value={password} 
-                onChange={e => setPassword(e.target.value)}/>
-{/*             {loginError !== null && (
-            <p>{loginError}</p>
-            )} */}
-            <button type="submit">Submit</button>
-        </form>
-        </div>
-    </> 
+        <OuterWrapper>
+            <StyledSection>
+                <StyledHeading>Welcome</StyledHeading>
+                <div>
+                    <label htmlFor="register">Register</label>
+                    <input type="radio" id="register" checked={mode === "register"} onChange={() => setMode("register")} />
+                    <label htmlFor="login">Login</label>
+                    <input type="radio" id="login" checked={mode === "login"} onChange={() => setMode("login")} />
+                </div>
+                <StyledForm onSubmit={onFormSubmit}>
+                    <label htmlFor="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        value={username}
+                        onChange={e => setUsername(e.target.value)} />
+                    <label htmlFor="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)} />
+                    <StyledButton type="submit">Submit</StyledButton>
+                </StyledForm>
+            </StyledSection>
+        </OuterWrapper>
     );
 
 }
