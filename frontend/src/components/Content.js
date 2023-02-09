@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector, batch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import user from "reducers/user";
+import { StyledButton, StyledSection, OuterWrapper, StyledHeading } from "../GlobalStyles"
 
 
 const Content = () => {
@@ -11,15 +12,15 @@ const Content = () => {
 
 
     const logout = () => {
-      dispatch(user.actions.setAccessToken(null));
+        dispatch(user.actions.setAccessToken(null));
     };
 
-    useEffect( () => {
+    useEffect(() => {
         if (!accessToken) {
             navigate("/login");
         }
     }, []);
-    
+
     useEffect(() => {
         const options = {
             method: "GET",
@@ -27,16 +28,17 @@ const Content = () => {
                 "Content-Type": "application/json",
                 "Authorization": accessToken
             }
-}});
+        }
+    });
 
     return (
-        <>
-        <div className="log-in-div">
-        <h1>You are now logged in</h1>
-        <label>This is a secret message</label>
-        <Link to="/login"> <button type="button" onClick={() => dispatch(user.actions.setAccessToken(null))}>Sign Out</button></Link>
-        </div>
-        </>
+        <OuterWrapper>
+            <StyledSection>
+                <StyledHeading>You are now logged in</StyledHeading>
+                <p>This is a secret message</p>
+                <Link to="/login"> <StyledButton type="button" onClick={() => dispatch(user.actions.setAccessToken(null))}>Sign Out</StyledButton></Link>
+            </StyledSection>
+        </OuterWrapper>
     )
 }
 

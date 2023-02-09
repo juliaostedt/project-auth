@@ -7,25 +7,22 @@ import { Provider } from 'react-redux';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import user from 'reducers/user';
 
-
 const reducer = combineReducers({
   user: user.reducer,
 });
 
-const store = configureStore({reducer});
+const store = configureStore({ reducer });
 export const App = () => {
   return (
     <Provider store={store}>
       <BrowserRouter>
-      <div className="outer-div">
         <Routes>
-          <Route path='/login' element={<LogIn/>}></Route>
-          <Route path='/' element={<Content/>}></Route>
-          <Route path='*' element={<NotFound/>}></Route>
+          <Route path='/login' element={<LogIn />}></Route>
+          <Route path='/' element={<Content />}></Route>
+          <Route path='*' element={<NotFound />}></Route>
         </Routes>
-      </div>
       </BrowserRouter>
     </Provider>
-      
+
   );
 }
